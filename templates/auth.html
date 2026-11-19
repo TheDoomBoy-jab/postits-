@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>postits {{"create account" if mode=="register" else "sign in" }}</title>
+
+
+</head>
+<body>
+
+    <h1>{{"Create Account" if mode=="register" else "Sign In" }}</h1>
+    {%for message in get_flashed_messages() %}
+        <p role="alert">{{ message }}</p>
+    {% endfor %}
+
+    {% if error %}<p role="alert">{{ error }}</p>{% endif %}
+
+    <form method="post" action = "{{url_for(mode)}}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <p>
+            <label for="email">Email:</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+        </p>
+
+        <p>
+            <label for="password">Password:</label>
+             <input id="password" name="password" type="password"
+            autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}"
+             {% if mode == "register" %}minlength="12"{% endif %} required>
+        </p>
+
+        <button type="submit">{{"Create Account" if mode=="register" else "Sign In" }}</button>
+        
+    </form>
+
+    {% if mode == "register" %}
+        <p>Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+    {% else %}
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Create one</a></p>
+    {% endif %}
+    
+</body>
+</html>

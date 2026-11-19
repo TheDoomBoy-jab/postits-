@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>application receipt</title>
+</head>
+
+<body>
+
+    <h1>application receipt</h1>
+    <p>Receipt ID: <code id="receipt-id">{{ receipt_id }}</code></p>
+
+   <dl>
+    {% for key, value in values.items() %}
+      <dt>{{ key.replace("_", " ") }}</dt>
+      <dd>{{ value }}</dd>
+    {% endfor %}
+    </dl>
+    
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Postits | Profile</title>
+</head>
+<body>
+  <h1>Your profile</h1>
+  <p>Signed in as {{ current_user.email }}</p>
+
+  {% for message in get_flashed_messages() %}
+    <p role="status">{{ message }}</p>
+  {% endfor %}
+
+  <form method="post" enctype="multipart/form-data" action="{{ url_for('profile') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <p>
+      <label for="name">Full name</label>
+      <input id="name" name="name" value="{{ values.get('name', '') }}" required>
+    </p>
+    <p>
+      <label for="phone">Phone number</label>
+      <input id="phone" name="phone" type="tel" value="{{ values.get('phone', '') }}" required>
+    </p>
+    <p>
+      <label for="github">GitHub URL</label>
+      <input id="github" name="github" type="url" value="{{ values.get('github', '') }}">
+    </p>
+    <p>
+      <label for="resume">Résumé PDF</label>
+      <input id="resume" name="resume" type="file" accept=".pdf,application/pdf">
+    </p>
+
+    {% if values.get("resume_filename") %}
+      <p>Saved résumé {{ values.resume_filename }}</p>
+    {% endif %}
+
+    <button type="submit">Save profile</button>
+  </form>
+
+  <form method="post" action="{{ url_for('logout') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit">Sign out</button>
+  </form>
+</body>
+</html>

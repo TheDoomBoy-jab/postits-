@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Postits | Demo application</title>
+</head>
+<body>
+  <main>
+    <h1>Demo employer application</h1>
+
+    {% if error %}
+      <p role="alert">{{ error }}</p>
+    {% endif %}
+
+    <form action="{{ url_for('apply') }}"
+          method="post"
+          enctype="multipart/form-data">
+
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <p>
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text"
+               value="{{ values.get('name', '') }}" autocomplete="name" required>
+      </p>
+
+      <p>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email"
+               value="{{ values.get('email', '') }}" autocomplete="email" required>
+      </p>
+
+      <p>
+        <label for="phone">Phone number</label>
+        <input id="phone" name="phone" type="tel"
+               value="{{ values.get('phone', '') }}" autocomplete="tel" required>
+      </p>
+
+      <p>
+        <label for="github">GitHub URL (optional)</label>
+        <input id="github" name="github" type="url"
+               value="{{ values.get('github', '') }}"
+               placeholder="https://github.com/your-username">
+      </p>
+
+      <p>
+        <label for="motivation">Why are you interested in this role?</label><br>
+        <textarea id="motivation" name="motivation" rows="4"
+                  required>{{ values.get('motivation', '') }}</textarea>
+      </p>
+
+      <p>
+        <label for="experience">Relevant experience (optional)</label><br>
+        <textarea id="experience" name="experience"
+                  rows="4">{{ values.get('experience', '') }}</textarea>
+      </p>
+
+      <p>
+        <label for="start-date">Start date (optional)</label>
+        <input id="start-date" name="start_date" type="date"
+               value="{{ values.get('start_date', '') }}">
+      </p>
+
+      <p>
+        <label for="end-date">End date (optional)</label>
+        <input id="end-date" name="end_date" type="date"
+               value="{{ values.get('end_date', '') }}">
+      </p>
+
+      <p>
+        <label for="resume">Résumé PDF (up to 16 MiB)</label>
+        <input id="resume" name="resume" type="file"
+               accept=".pdf,application/pdf" required>
+      </p>
+
+      <button type="submit">Submit application</button>
+
+      
+    </form>
+  </main>
+</body>
+</html>
